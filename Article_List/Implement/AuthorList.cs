@@ -4,6 +4,7 @@ using Article_Step_1.BindingModel;
 using Article_Step_1.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Article_List.Implement
@@ -19,56 +20,45 @@ namespace Article_List.Implement
 
         public List<AuthorViewModel> GetList()
         {
-            List<AuthorViewModel> authors = new List<AuthorViewModel>();
-            for (int i = 0; i < source.Authors.Count; i++)
+            List<AuthorViewModel> authors = source.Authors.Select(rec => new AuthorViewModel
             {
-                authors.Add(new AuthorViewModel
-                {
-                    Id = source.Authors[i].Id,
-                    AuthorFIO = source.Authors[i].AuthorFIO,
-                    Email = source.Authors[i].Email,
-                    DateBirth = source.Authors[i].DateBirth,
-                    Job = source.Authors[i].Job,
-                    ArticleId = source.Authors[i].ArticleId
-                });
-            }
+                Id = rec.Id,
+                AuthorFIO = rec.AuthorFIO,
+                Email = rec.Email,
+                DateBirth = rec.DateBirth,
+                Job = rec.Job,
+                ArticleId = rec.ArticleId
+            })
+             .ToList();
             return authors;
         }
 
         public AuthorViewModel GetElement(int id)
         {
-            for (int i = 0; i < source.Authors.Count; ++i)
+            Author author = source.Authors.FirstOrDefault(rec => rec.Id == id);
+            if (author != null)
             {
-                if (id == source.Authors[i].Id)
+                return new AuthorViewModel
                 {
-                    return new AuthorViewModel
-                    {
-                        Id = source.Authors[i].Id,
-                        AuthorFIO = source.Authors[i].AuthorFIO,
-                        Email = source.Authors[i].Email,
-                        DateBirth = source.Authors[i].DateBirth,
-                        Job = source.Authors[i].Job,
-                        ArticleId = source.Authors[i].ArticleId
-                    };
-                }
+                    Id = author.Id,
+                    AuthorFIO = author.AuthorFIO,
+                    Email = author.Email,
+                    DateBirth = author.DateBirth,
+                    Job = author.Job,
+                    ArticleId = author.ArticleId
+                };
             }
-            throw new Exception("Статья не найдена");
+            throw new Exception("Автор не найден");
         }
 
         public void AddElement(AuthorBindingModel authors)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Authors.Count; i++)
+            Author element = source.Authors.FirstOrDefault(rec => rec.AuthorFIO == authors.AuthorFIO);
+            if (element != null)
             {
-                if (source.Authors[i].Id > maxId)
-                {
-                    maxId = source.Authors[i].Id;
-                }
-                if (source.Authors[i].AuthorFIO == authors.AuthorFIO)
-                {
-                    throw new Exception("Уже есть такой автор");
-                }
+                throw new Exception("Уже есть такой автор");
             }
+            int maxId = source.Authors.Count > 0 ? source.Authors.Max(rec => rec.Id) : 0;
             source.Authors.Add(new Author
             {
                 Id = maxId + 1,
@@ -82,48 +72,37 @@ namespace Article_List.Implement
 
         public void UpdElement(AuthorBindingModel authors)
         {
-            int index = -1;
-            for (int i = 0; i < source.Authors.Count; i++)
+            Author element = source.Authors.FirstOrDefault(rec => rec.AuthorFIO == authors.AuthorFIO &&
+            rec.Email == authors.Email && rec.DateBirth == authors.DateBirth && rec.Job == authors.Job
+            && rec.ArticleId == authors.ArticleId);
+            if (element != null)
             {
-                if (source.Authors[i].Id == authors.Id)
-                {
-                    index = i;
-                }
-                if (source.Authors[i].AuthorFIO == authors.AuthorFIO &&
-                    source.Authors[i].Email == authors.Email &&
-                    source.Authors[i].DateBirth == authors.DateBirth &&
-                    source.Authors[i].Job == authors.Job &&
-                    source.Authors[i].ArticleId == authors.ArticleId &&
-                    source.Authors[i].Id == authors.Id)
-                {
-                    throw new Exception("Уже есть такой автор");
-                }
+                throw new Exception("Уже есть такой автор");
             }
-
-            if (index == -1)
+            element = source.Authors.FirstOrDefault(rec => rec.Id == authors.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-
-            source.Authors[index].AuthorFIO = authors.AuthorFIO;
-            source.Authors[index].Email = authors.Email;
-            source.Authors[index].DateBirth = authors.DateBirth;
-            source.Authors[index].Job = authors.Job;
-            source.Authors[index].ArticleId = authors.ArticleId;
-
+            element.AuthorFIO = authors.AuthorFIO;
+            element.Email = authors.Email;
+            element.DateBirth = authors.DateBirth;
+            element.Job = authors.Job;
+            element.ArticleId = authors.ArticleId;
         }
 
         public void DelElement(int id)
         {
-            for (int i = 0; i < source.Authors.Count; i++)
+            Author author = source.Authors.FirstOrDefault(rec => rec.Id == id);
+            if (author != null)
             {
-                if (source.Authors[i].Id == id)
-                {
-                    source.Authors.RemoveAt(i);
-                    return;
-                }
+                source.Authors.Remove(author);
             }
-            throw new Exception("элемнет не найден");
+            else
+            {
+                throw new Exception("Элемент не найден");
+
+            }
         }
     }
 }
