@@ -1,5 +1,8 @@
 ﻿using Article_DAL.Interface;
+using Article_Database;
+using Article_Database.Implements;
 using Article_List.Implement;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +31,9 @@ namespace Article_Exam
         {
             var currentContainer = new UnityContainer();
 
-            currentContainer.RegisterType<IArticle, ArticleList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IAuthor, AuthorList>(new HierarchicalLifetimeManager());
-
+            currentContainer.RegisterType<IArticle, ArticleLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IAuthor, AuthorLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<DbContext, ArticleDatabase>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }
