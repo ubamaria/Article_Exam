@@ -34,6 +34,7 @@ namespace Article_Exam
             currentContainer.RegisterType<IArticle, ArticleLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IAuthor, AuthorLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<DbContext, ArticleDatabase>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportLogic>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

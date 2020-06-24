@@ -35,6 +35,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.отчетToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +54,8 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.авторыToolStripMenuItem});
+            this.авторыToolStripMenuItem,
+            this.отчетToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 28);
@@ -107,6 +109,12 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // отчетToolStripMenuItem
+            // 
+            this.отчетToolStripMenuItem.Name = "отчетToolStripMenuItem";
+            this.отчетToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
+            this.отчетToolStripMenuItem.Text = "Отчет";
+            // 
             // FormArticles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -139,5 +147,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ToolStripMenuItem отчетToolStripMenuItem;
     }
 }

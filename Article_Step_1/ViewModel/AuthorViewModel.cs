@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Article_Step_1.BindingModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,5 +17,7 @@ namespace Article_Step_1.ViewModel
         public DateTime DateBirth { get; set; }
 
         public string Job { get; set; }
+        public List<AuthorBindingModel> ArticleAuthors { get; set; }
+        public string Title { get; set; }
     }
 }
