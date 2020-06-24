@@ -42,6 +42,14 @@ namespace Article_Exam
 
         private void FormAuthor_Load(object sender, EventArgs e)
         {
+            List<ArticleViewModel> list = article.Read(null);
+            if (list != null)
+            {
+                comboBox1.DisplayMember = "Title";
+                comboBox1.ValueMember = "Id";
+                comboBox1.DataSource = list;
+                comboBox1.SelectedItem = null;
+            }
             if (id.HasValue)
             {
                 try
@@ -55,15 +63,8 @@ namespace Article_Exam
                         dateTimePicker1.Value = view.DateBirth;
 
                     }
-                    List<ArticleViewModel> list = article.Read(null);
-                    if (list != null)
-                    {
-                        comboBox1.DisplayMember = "Title";
-                        comboBox1.ValueMember = "Id";
-                        comboBox1.DataSource = list;
-                        comboBox1.SelectedItem = null;
-                    }
                 }
+                                
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
@@ -79,13 +80,15 @@ namespace Article_Exam
                 MessageBox.Show("Введите ФИО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (comboBox1.SelectedValue == null)
-            {
-                MessageBox.Show("Выберите статью", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            //if (comboBox1.SelectedValue == null)
+            //{
+            //    MessageBox.Show("Выберите статью", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
             try
             {
+                if (id.HasValue)
+                {
                     author.CreateOrUpdate(new AuthorBindingModel()
                     {
                         Id = id.Value,
@@ -95,6 +98,18 @@ namespace Article_Exam
                         DateBirth = dateTimePicker1.Value,
                         ArticleId = Convert.ToInt32(comboBox1.SelectedValue)
                     });
+                }
+                else
+                {
+                    author.CreateOrUpdate(new AuthorBindingModel()
+                    {
+                        AuthorFIO = textBox1.Text,
+                        Email = textBox2.Text,
+                        Job = textBox3.Text,
+                        DateBirth = dateTimePicker1.Value,
+                        ArticleId = Convert.ToInt32(comboBox1.SelectedValue)
+                    });
+                }
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
