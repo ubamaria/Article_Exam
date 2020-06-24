@@ -1,4 +1,5 @@
 ﻿using Article_DAL.Interface;
+using Article_Step_1.BindingModel;
 using Article_Step_1.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace Article_Exam
         {
             try
             {
-                var list = author.GetList();
+                var list = author.Read(null);
                 if (list != null)
                 {
                     dataGridView1.DataSource = list;
@@ -81,7 +82,7 @@ namespace Article_Exam
                     int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        author.DelElement(id);
+                        author.Delete(new AuthorBindingModel { Id = id });
                     }
                     catch (Exception ex)
                     {

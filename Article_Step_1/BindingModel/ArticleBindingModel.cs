@@ -6,13 +6,13 @@ namespace Article_Step_1.BindingModel
 {
     public class ArticleBindingModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string Title { get; set; }
 
         public string Subject { get; set; }
 
         public DateTime DateCreate { get; set; }
-        public List<AuthorBindingModel> Authors { get; set; }
+        public List<AuthorBindingModel> ArticleAuthors { get; set; }
     }
 }

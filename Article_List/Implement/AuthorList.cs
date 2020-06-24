@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Article_List.Implement
 {
-    public class AuthorList : IAuthor
+    public class AuthorList 
     {
         private DataListSingleton source;
 
@@ -66,7 +66,7 @@ namespace Article_List.Implement
                 DateBirth = authors.DateBirth,
                 Email = authors.Email,
                 Job = authors.Job,
-                ArticleId = authors.Id
+             //   ArticleId = authors.Id
             });
         }
 

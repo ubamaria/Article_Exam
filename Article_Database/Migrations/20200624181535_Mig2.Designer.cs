@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Article_Database.Migrations
 {
     [DbContext(typeof(ArticleDatabase))]
-    [Migration("20200623212346_Mig2")]
+    [Migration("20200624181535_Mig2")]
     partial class Mig2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace Article_Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Article_List.Models.Article", b =>
+            modelBuilder.Entity("Article_Database.Models.Article", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,6 +35,7 @@ namespace Article_Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -42,17 +43,37 @@ namespace Article_Database.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("Article_List.Models.Author", b =>
+            modelBuilder.Entity("Article_Database.Models.ArticleAuthor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArticleId")
+                    b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("ArticleAuthors");
+                });
+
+            modelBuilder.Entity("Article_Database.Models.Author", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<string>("AuthorFIO")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateBirth")
@@ -66,18 +87,18 @@ namespace Article_Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleId");
-
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("Article_List.Models.Author", b =>
+            modelBuilder.Entity("Article_Database.Models.ArticleAuthor", b =>
                 {
-                    b.HasOne("Article_List.Models.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Article_Database.Models.Article", "Article")
+                        .WithMany("ArticleAuthors")
+                        .HasForeignKey("ArticleId");
+
+                    b.HasOne("Article_Database.Models.Author", "Author")
+                        .WithMany("ArticleAuthors")
+                        .HasForeignKey("AuthorId");
                 });
 #pragma warning restore 612, 618
         }
