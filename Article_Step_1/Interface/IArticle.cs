@@ -8,14 +8,8 @@ namespace Article_DAL.Interface
 {
     public interface IArticle
     {
-        List<ArticleViewModel> GetList();
-
-        ArticleViewModel GetElement(int id);
-
-        void AddElement(ArticleBindingModel model);
-
-        void UpdElement(ArticleBindingModel model);
-
-        void DelElement(int id);
+        List<ArticleViewModel> Read(ArticleBindingModel model);
+        void CreateOrUpdate(ArticleBindingModel model);
+        void Delete(ArticleBindingModel model);
     }
 }

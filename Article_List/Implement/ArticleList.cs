@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Article_List.Implement
 {
-    public class ArticleList : IArticle
+    public class ArticleList 
     {
         private DataListSingleton source;
 

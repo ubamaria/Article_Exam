@@ -32,7 +32,7 @@ namespace Article_Exam
             {
                 try
                 {
-                    var view = article.GetElement(id.Value);
+                    var view = article.Read(new ArticleBindingModel { Id = id })?[0];
                     if (view != null)
                     {
                         textBox1.Text = view.Title;
@@ -63,7 +63,7 @@ namespace Article_Exam
             {
                 if (id.HasValue)
                 {
-                    article.UpdElement(new ArticleBindingModel()
+                    article.CreateOrUpdate(new ArticleBindingModel()
                     {
                         Id = id.Value,
                         Title = textBox1.Text,
@@ -73,7 +73,7 @@ namespace Article_Exam
                 }
                 else
                 {
-                    article.AddElement(new ArticleBindingModel()
+                    article.CreateOrUpdate(new ArticleBindingModel()
                     {
                         Title = textBox1.Text,
                         Subject = textBox2.Text,

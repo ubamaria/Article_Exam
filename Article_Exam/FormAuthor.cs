@@ -19,11 +19,17 @@ namespace Article_Exam
         [Dependency]
         public new IUnityContainer Container { get; set; }
 
-        public int Id { set { id = value; } }
+        public int Id
+        {
+            get { return Convert.ToInt32(comboBox1.SelectedValue); }
+            set { comboBox1.SelectedValue = value; }
+        }
+        public string Title { get { return comboBox1.Text; } }
+
 
         private readonly IAuthor author;
-
         private readonly IArticle article;
+
 
         private int? id;
         public FormAuthor(IAuthor author, IArticle article)
@@ -31,35 +37,38 @@ namespace Article_Exam
             InitializeComponent();
             this.author = author;
             this.article = article;
+
         }
 
         private void FormAuthor_Load(object sender, EventArgs e)
         {
-            List<ArticleViewModel> list = article.GetList();
+            List<ArticleViewModel> list = article.Read(null);
             if (list != null)
             {
                 comboBox1.DisplayMember = "Title";
                 comboBox1.ValueMember = "Id";
                 comboBox1.DataSource = list;
+                comboBox1.SelectedItem = null;
             }
             if (id.HasValue)
             {
                 try
                 {
-
-                    var view = author.GetElement(id.Value);
+                    var view = author.Read(new AuthorBindingModel { Id = id })?[0];
                     if (view != null)
                     {
                         textBox1.Text = view.AuthorFIO;
                         textBox2.Text = view.Email;
-                        dateTimePicker1.Value = view.DateBirth;
                         textBox3.Text = view.Job;
+                        dateTimePicker1.Value = view.DateBirth;
 
                     }
                 }
+                                
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
                 }
             }
         }
@@ -71,16 +80,16 @@ namespace Article_Exam
                 MessageBox.Show("Введите ФИО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (comboBox1.SelectedValue == null)
-            {
-                MessageBox.Show("Выберите статью", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            //if (comboBox1.SelectedValue == null)
+            //{
+            //    MessageBox.Show("Выберите статью", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
             try
             {
                 if (id.HasValue)
                 {
-                    author.UpdElement(new AuthorBindingModel()
+                    author.CreateOrUpdate(new AuthorBindingModel()
                     {
                         Id = id.Value,
                         AuthorFIO = textBox1.Text,
@@ -92,7 +101,7 @@ namespace Article_Exam
                 }
                 else
                 {
-                    author.AddElement(new AuthorBindingModel()
+                    author.CreateOrUpdate(new AuthorBindingModel()
                     {
                         AuthorFIO = textBox1.Text,
                         Email = textBox2.Text,

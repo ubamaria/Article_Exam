@@ -6,7 +6,7 @@ namespace Article_Step_1.BindingModel
 {
     public class AuthorBindingModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int ArticleId { get; set; }
 
         public string AuthorFIO { get; set; }
