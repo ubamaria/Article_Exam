@@ -31,11 +31,11 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.авторыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.отчетToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.отчетToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -68,6 +68,13 @@
             this.авторыToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
             this.авторыToolStripMenuItem.Text = "Авторы";
             this.авторыToolStripMenuItem.Click += new System.EventHandler(this.авторыToolStripMenuItem_Click);
+            // 
+            // отчетToolStripMenuItem
+            // 
+            this.отчетToolStripMenuItem.Name = "отчетToolStripMenuItem";
+            this.отчетToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
+            this.отчетToolStripMenuItem.Text = "Отчет";
+            this.отчетToolStripMenuItem.Click += new System.EventHandler(this.отчетToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -108,12 +115,6 @@
             this.button4.Text = "Обновить";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // отчетToolStripMenuItem
-            // 
-            this.отчетToolStripMenuItem.Name = "отчетToolStripMenuItem";
-            this.отчетToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
-            this.отчетToolStripMenuItem.Text = "Отчет";
             // 
             // FormArticles
             // 

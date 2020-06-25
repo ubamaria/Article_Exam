@@ -16,5 +16,7 @@ namespace Article_Step_1.BindingModel
         public DateTime DateBirth { get; set; }
 
         public string Job { get; set; }
+        public DateTime? DateFrom { get; set; }
+        public DateTime? DateTo { get; set; }
     }
 }

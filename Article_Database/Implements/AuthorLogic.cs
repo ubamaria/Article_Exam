@@ -39,6 +39,7 @@ namespace Article_Database.Implements
                 element.Email = model.Email;
                 element.DateBirth = model.DateBirth;
                 element.Job = model.Job;
+                element.ArticleId = model.ArticleId;
                 context.SaveChanges();
             }
         }
@@ -64,13 +65,16 @@ namespace Article_Database.Implements
             using (var context = new ArticleDatabase())
             {
                 return context.Authors
-                .Where(rec => model == null || rec.Id == model.Id)
+                .Where(rec => model == null || rec.Id == model.Id || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.Article.DateCreate >= model.DateFrom && rec.Article.DateCreate <= model.DateTo))
                 .Select(rec => new AuthorViewModel
                 {
                     Id = rec.Id,
                     AuthorFIO = rec.AuthorFIO,
                     Email = rec.Email,
+                    ArticleId = rec.ArticleId,
                     DateBirth = rec.DateBirth,
+                    DateCreate = rec.Article.DateCreate,
+                    Title = rec.Article.Title,
                     Job = rec.Job
                 })
                 .ToList();

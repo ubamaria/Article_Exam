@@ -16,7 +16,7 @@ namespace Article_Database
         }
         public virtual DbSet<Article> Articles { set; get; }
         public virtual DbSet<Author> Authors { set; get; }
-        public virtual DbSet<ArticleAuthor> ArticleAuthors { set; get; }
+        //public virtual DbSet<ArticleAuthor> ArticleAuthors { set; get; }
 
     }
 }

@@ -2,6 +2,8 @@
 using Article_DAL.HelperModels;
 using Article_DAL.Interface;
 using Article_DAL.ViewModel;
+using Article_Step_1.BindingModel;
+using Article_Step_1.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,26 +20,25 @@ namespace Article_DAL.BusinessLogics
             this.author = author;
             this.article = article;
         }
-        public List<ReportArticleAuthorViewModel> GetArticleAuthors()
+        public List<AuthorViewModel> GetAuthors(ReportBindingModel model)
         {
-            var authors = author.Read(null);
-            var list = new List<ReportArticleAuthorViewModel>();
+            var authors = author.Read(new AuthorBindingModel
+            {
+                DateFrom = model.DateFrom,
+                DateTo = model.DateTo
+            });
+            var list = new List<AuthorViewModel>();
             foreach (var author in authors)
             {
-                foreach (var ds in author.ArticleAuthors)
-                {
-
-                    var record = new ReportArticleAuthorViewModel
+                    var record = new AuthorViewModel
                     {
-                        ArticleName = author.Title,
-                        AuthorName = author.AuthorFIO,
-                        //Title = author.Title,
-                        //AuthorFIO = author.AuthorFIO,
-                        //Job = author.Job,
-                        //DateCreate = author.DateCreate
+                        AuthorFIO = author.AuthorFIO,
+                        Email = author.Email,
+                        DateBirth = author.DateBirth,
+                        Job = author.Job,
+                        Title = author.Title,
                     };
                     list.Add(record);
-                }
             }
             return list;
         }
@@ -66,7 +67,7 @@ namespace Article_DAL.BusinessLogics
             {
                 FileName = model.FileName,
                 Title = "Список авторов по статьям",
-                ArticleAuthors = GetArticleAuthors()
+               Authors = GetAuthors(model)
             });
         }
     }

@@ -9,7 +9,7 @@ namespace Article_Database.Models
     public class Author
     {
         public int Id { get; set; }
-        //public int ArticleId { get; set; }
+        public int ArticleId { get; set; }
 
         [Required] public string AuthorFIO { get; set; }
 
@@ -19,6 +19,6 @@ namespace Article_Database.Models
 
         public string Job { get; set; }
         [ForeignKey("AuthorId")]
-        public virtual List<ArticleAuthor> ArticleAuthors { get; set; }
+        public virtual Article Article { get; set; }
     }
 }

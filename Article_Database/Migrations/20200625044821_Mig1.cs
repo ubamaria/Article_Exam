@@ -13,7 +13,7 @@ namespace Article_Database.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
                     Subject = table.Column<string>(nullable: true),
                     DateCreate = table.Column<DateTime>(nullable: false)
                 },
@@ -29,26 +29,27 @@ namespace Article_Database.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ArticleId = table.Column<int>(nullable: false),
-                    AuthorFIO = table.Column<string>(nullable: true),
+                    AuthorFIO = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     DateBirth = table.Column<DateTime>(nullable: false),
-                    Job = table.Column<string>(nullable: true)
+                    Job = table.Column<string>(nullable: true),
+                    AuthorId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Authors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Authors_Articles_ArticleId",
-                        column: x => x.ArticleId,
+                        name: "FK_Authors_Articles_AuthorId",
+                        column: x => x.AuthorId,
                         principalTable: "Articles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Authors_ArticleId",
+                name: "IX_Authors_AuthorId",
                 table: "Authors",
-                column: "ArticleId");
+                column: "AuthorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

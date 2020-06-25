@@ -41,28 +41,6 @@ namespace Article_Database.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("Article_Database.Models.ArticleAuthor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("AuthorId");
-
-                    b.ToTable("ArticleAuthors");
-                });
-
             modelBuilder.Entity("Article_Database.Models.Author", b =>
                 {
                     b.Property<int>("Id")
@@ -70,9 +48,15 @@ namespace Article_Database.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("AuthorFIO")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateBirth")
                         .HasColumnType("datetime2");
@@ -85,17 +69,15 @@ namespace Article_Database.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuthorId");
+
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("Article_Database.Models.ArticleAuthor", b =>
+            modelBuilder.Entity("Article_Database.Models.Author", b =>
                 {
                     b.HasOne("Article_Database.Models.Article", "Article")
-                        .WithMany("ArticleAuthors")
-                        .HasForeignKey("ArticleId");
-
-                    b.HasOne("Article_Database.Models.Author", "Author")
-                        .WithMany("ArticleAuthors")
+                        .WithMany("Authors")
                         .HasForeignKey("AuthorId");
                 });
 #pragma warning restore 612, 618

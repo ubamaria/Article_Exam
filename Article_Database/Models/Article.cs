@@ -14,6 +14,6 @@ namespace Article_Database.Models
         public string Subject { get; set; }
 
         public DateTime DateCreate { get; set; }
-        public virtual List<ArticleAuthor> ArticleAuthors { get; set; }
+        public virtual List<Author> Authors { get; set; }
     }
 }

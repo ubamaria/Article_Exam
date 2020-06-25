@@ -39,21 +39,21 @@ namespace Article_Database.Implements
                 element.Subject = model.Subject;
                 element.DateCreate = model.DateCreate;
                 context.SaveChanges();
-                if (model.Id.HasValue)
-                {
-                    var articleAuthors = context.ArticleAuthors.Where(rec
-                   => rec.ArticleId == model.Id.Value).ToList();
-                }
+                //if (model.Id.HasValue)
+                //{
+                //    var articleAuthors = context.ArticleAuthors.Where(rec
+                //   => rec.ArticleId == model.Id.Value).ToList();
+                //}
                 // добавили новые
-                foreach (var pc in model.ArticleAuthors)
-                {
-                    context.ArticleAuthors.Add(new ArticleAuthor
-                    {
-                       ArticleId = element.Id,
-                        AuthorId = pc.Id
-                    });
-                    context.SaveChanges();
-                }
+                //foreach (var pc in model.ArticleAuthors)
+                //{
+                //    context.ArticleAuthors.Add(new ArticleAuthor
+                //    {
+                //       ArticleId = element.Id,
+                //        AuthorId = pc.Id
+                //    });
+                //    context.SaveChanges();
+                //}
             }
         }
         public void Delete(ArticleBindingModel model)

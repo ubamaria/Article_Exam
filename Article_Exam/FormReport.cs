@@ -1,4 +1,6 @@
-﻿using Article_DAL.BusinessLogics;
+﻿using Article_DAL.BindingModel;
+using Article_DAL.BusinessLogics;
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,24 +25,50 @@ namespace Article_Exam
             this.logic = logic;
         }
 
-        private void FormReport_Load(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-
+            if (dateTimePicker1.Value.Date >= dateTimePicker2.Value.Date)
+            {
+                MessageBox.Show("Дата начала должна быть меньше даты окончания", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                var dataSource = logic.GetAuthors(new ReportBindingModel { DateFrom = dateTimePicker1.Value.Date, DateTo = dateTimePicker2.Value.Date });
+                ReportDataSource source = new ReportDataSource("DataSet1", dataSource);
+                reportViewer1.LocalReport.DataSources.Add(source);
+                reportViewer1.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+               MessageBoxIcon.Error);
+            }
             this.reportViewer1.RefreshReport();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-          
-            ReportDataSource source = new ReportDataSource("DataSetOrders",
-                dataSource);
-            reportViewer.LocalReport.DataSources.Add(source);
-
-            reportViewer.RefreshReport();
-        }             
-        catch (Exception ex)             
+            using (var dialog = new SaveFileDialog { Filter = "pdf|*.pdf" })
             {
-            MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);             
-}
-}
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        logic.SaveAuthorArticles(new ReportBindingModel
+                        {
+                            FileName = dialog.FileName,
+                            DateFrom = dateTimePicker1.Value.Date,
+                            DateTo = dateTimePicker2.Value.Date,
+                        });
+                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+    }
 }

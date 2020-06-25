@@ -102,5 +102,11 @@ namespace Article_Exam
             var form = Container.Resolve<FormAuthors>();
             form.ShowDialog();
         }
+
+        private void отчетToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReport>();
+            form.ShowDialog();
+        }
     }
 }

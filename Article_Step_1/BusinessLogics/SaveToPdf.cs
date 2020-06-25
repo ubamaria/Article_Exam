@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Article_DAL.BusinessLogics
 {
-   class SaveToPdf
+    class SaveToPdf
     {
         public static void CreateDoc(PdfInfo info)
         {
@@ -21,7 +21,7 @@ namespace Article_DAL.BusinessLogics
             paragraph.Style = "NormalTitle";
             paragraph.Style = "Normal";
             var table = document.LastSection.AddTable();
-            List<string> columns = new List<string> { "6cm", "6cm", "6cm"};
+            List<string> columns = new List<string> { "6cm", "6cm", "6cm","6cm", "6cm" };
 
             foreach (var elem in columns)
             {
@@ -30,19 +30,21 @@ namespace Article_DAL.BusinessLogics
             CreateRow(new PdfRow
             {
                 Table = table,
-                Texts = new List<string> { "Дата создания", "Статья", "Автор"},
+                Texts = new List<string> { "статья", "дата создания", "Автор", "Дата рождения", "Работа" },
                 Style = "NormalTitle",
                 ParagraphAlignment = ParagraphAlignment.Center
             });
-            foreach (var aa in info.ArticleAuthors)
+            foreach (var aa in info.Authors)
             {
                 CreateRow(new PdfRow
                 {
                     Table = table,
                     Texts = new List<string> {
-                       // aa.DateCreate.ToShortDateString(),
-                        aa.ArticleName,
-                        aa.AuthorName,
+                        aa.Title,
+                        aa.DateCreate.ToString(),
+                        aa.AuthorFIO,
+                         aa.DateBirth.ToString(),
+                         aa.Job,
                     },
                     Style = "Normal",
                     ParagraphAlignment = ParagraphAlignment.Left

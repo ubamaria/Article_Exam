@@ -1,4 +1,5 @@
-﻿using Article_DAL.Interface;
+﻿using Article_DAL.BusinessLogics;
+using Article_DAL.Interface;
 using Article_Database;
 using Article_Database.Implements;
 using Article_List.Implement;
